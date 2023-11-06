@@ -9,7 +9,7 @@ const port = 3030;
 
 
 
-mongoose.connect("mongodb+srv://kaychik:52oputih@cluster0.1pefs.mongodb.net/shop").then(() => {
+mongoose.connect("mongodb+srv://kaychik:<password>@cluster0.1pefs.mongodb.net/shop").then(() => {
     console.log("Connected to MongoDB successful!")
 }).catch((e) => {
     console.log(e)
