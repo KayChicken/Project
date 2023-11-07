@@ -12,6 +12,7 @@ import CreateProduct from "./components/AdminPanel/CreateProduct/CreateProduct";
 import DeleteProduct from "./components/AdminPanel/DeleteProduct/DeleteProduct";
 import EditProduct from "./components/AdminPanel/EditProduct/EditProduct";
 import FullEditProduct from "./components/AdminPanel/EditProduct/FullEditProduct";
+import Authorization from "./components/Authorization/Authorization";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/delete" element={<DeleteProduct />} />
           <Route path="/edit" element={<EditProduct />} />
           <Route path="/edit/:id" element={<FullEditProduct />} />
+          <Route path="/authorization" element={<Authorization />} />
         </Routes>
       </main>
       {/* <Footer /> */}
