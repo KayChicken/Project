@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const productRouter = require("./routes/products/productsRoute");
+const authRouter = require("./routes/auth/authRoute");
 const cors = require("cors");
 
 const app = express();
@@ -18,6 +19,7 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.use("/product", productRouter);
+app.use("/auth", authRouter);
 
 app.listen(port, () => {
   console.log(`Сервер запущен на порту ${port}`);

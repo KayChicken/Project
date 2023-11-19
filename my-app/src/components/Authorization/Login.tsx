@@ -1,19 +1,30 @@
 import React, { useState } from "react";
 
-const Login = () => {
+interface ILoginProp {
+  setChangeAuth: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Login: React.FC<ILoginProp> = ({ setChangeAuth }) => {
   const [formInit, setFormInit] = useState({
-    username: "",
+    login: "",
     password: "",
   });
 
   return (
     <>
       <h1>Авторизация</h1>
-      <label htmlFor="username">Логин</label>
-      <input type="text" name="username" />
+      <label htmlFor="login">Логин</label>
+      <input type="text" name="login" />
       <label htmlFor="password">Пароль</label>
       <input type="text" name="password" />
-      <button type="submit">Логин</button>
+      <button type="submit">Войти</button>
+      <button
+        onClick={() => {
+          setChangeAuth(false);
+        }}
+      >
+        Зарегистрироваться
+      </button>
     </>
   );
 };
