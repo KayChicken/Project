@@ -23,11 +23,37 @@ const Registration: React.FC<IRegistrationProp> = ({ setChangeAuth }) => {
     <>
       <h1>Регистрация</h1>
       <label htmlFor="username">Имя</label>
-      <input type="text" name="username" />
+      <input
+        type="text"
+        name="username"
+        onChange={(e) => {
+          setFormInit((prevForm) => ({
+            ...prevForm,
+            username: e.target.value,
+          }));
+        }}
+      />
       <label htmlFor="login">Логин</label>
-      <input type="text" name="login" />
+      <input
+        type="text"
+        name="login"
+        onChange={(e) =>
+          setFormInit((prevForm) => ({
+            ...prevForm,
+            login: e.target.value,
+          }))
+        }
+        value={formInit.login}
+      />
       <label htmlFor="password">Пароль</label>
-      <input type="text" name="password" />
+      <input
+        type="text"
+        name="password"
+        onChange={(e) =>
+          setFormInit((prevForm) => ({ ...prevForm, password: e.target.value }))
+        }
+        value={formInit.password}
+      />
       <button
         type="submit"
         onClick={() => {
