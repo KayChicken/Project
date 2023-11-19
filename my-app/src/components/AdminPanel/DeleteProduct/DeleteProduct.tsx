@@ -67,9 +67,20 @@ const DeleteProduct = () => {
           : "Загрузка..."}
       </div>
       {isShow && (
-        <div className="module-window-delete">
+        <div
+          className="module-window-delete"
+          style={{
+            position: "absolute",
+            width: "400px",
+            height: "200px",
+            backgroundColor: "#777",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
+          }}
+        >
           <h1>Вы уверены что хотите удалить товар?</h1>
-          <div>
+          <div style={{ display: "flex", columnGap: "15px" }}>
             <div
               className="delete-agree"
               onClick={() => confirmDelete("yes")}
