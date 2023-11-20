@@ -1,9 +1,14 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import React, { useState } from "react";
+import { IUser, setUser } from "../../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 interface IRegistrationProp {
   setChangeAuth: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+
 
 const Registration: React.FC<IRegistrationProp> = ({ setChangeAuth }) => {
   const [formInit, setFormInit] = useState({
@@ -12,12 +17,20 @@ const Registration: React.FC<IRegistrationProp> = ({ setChangeAuth }) => {
     password: "",
   });
 
+  const [status, setStatus] = useState<string>('')
+  const navigate = useNavigate()
   const registration = async () => {
-    const response = await axios.post(
-      "https://cjmnzp-3030.csb.app/auth/registration",
-      formInit,
-    );
+    const response = await axios.post<IUser>(
+      "http://localhost:3030/auth/registration",
+      formInit
+    ).then((response: AxiosResponse<IUser, any>) => {
+      const data: IUser = response.data;
+      dispatch(setUser(data));
+    });
   };
+
+  const dispatch = useDispatch()
+
 
   return (
     <>

@@ -50,7 +50,7 @@ const EditProduct = () => {
       >
         {products
           ? products.map((item) => (
-              <Link to={`https://cjmnzp-3000.csb.app/edit/${item._id}`}>
+              <Link to={`http://localhost:3000/edit/${item._id}`}>
                 <h3>{item.name}</h3>
                 <img
                   src={`${item.img}`}

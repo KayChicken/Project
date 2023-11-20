@@ -1,28 +1,30 @@
 const Router = require("express");
 const router = new Router();
 const Product = require("../../models/Item");
+const Category = require("../../models/Category");
+const mongoose = require('mongoose');
 
 router.post("/create", async (req, res) => {
   try {
     const {
-      _id,
       name,
       description,
       price,
       sizes,
+      category,
       colors,
       material,
       brand,
       img,
     } = req.body;
-    console.log(req.body);
+
     const product = new Product({
-      _id: _id,
       name: name,
       description: description,
       price: price,
       sizes: sizes,
       colors: colors,
+      category : category,
       material: material,
       brand: brand,
       img: img,
@@ -77,10 +79,12 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    const products = await Product.find();
-    res.json(products);
+    const category = req.body.category ? {category : req.body.category
+    } : {};
+    const products = await Product.find(category).populate('category').exec();
+    res.status(200).json(products);
   } catch (e) {
     console.log(e);
     return res.status(500).json({ message: "error" });
@@ -90,12 +94,22 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate('category').exec();;
     res.json(product);
   } catch (e) {
     res.json({ message: "error" });
     console.log(e);
   }
 });
+
+
+
+router.get("/api/info" , async (req,res) => {
+  const variants = await Category.find()
+  res.status(200).json(variants)
+ 
+} )
+
+
 
 module.exports = router;

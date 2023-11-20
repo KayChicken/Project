@@ -30,7 +30,7 @@ const DeleteProduct = () => {
   const confirmDelete = async (agree: string) => {
     if (agree === "yes") {
       await axios.delete(
-        `https://cjmnzp-3030.csb.app/product/delete/${chooseId}`,
+        `http://localhost:3030/product/delete/${chooseId}`,
       );
       setIsShow(!isShow);
       setChooseId(-1);

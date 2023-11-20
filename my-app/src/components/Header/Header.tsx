@@ -2,9 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
+import { exitLogin } from "../../redux/slices/authSlice";
 
 const Header = () => {
   const count = useSelector((state: RootState) => state.cart.cart);
+  const data = useSelector((state: RootState) => state.auth.data)
+
+
+  const dispatch = useDispatch()
+
+
 
   return (
     <header className="header">
@@ -29,10 +36,19 @@ const Header = () => {
           </nav>
           <div className="header__cart flex-row">
             <Link to="/cart">Корзина</Link>
-            <div className="header__cart-count">{count.length}</div>
+            <div style={{marginLeft:"10px"}} className="header__cart-count">{count.length}</div>
           </div>
           <div>
-            <Link to="/authorization">Авторизация</Link>
+            {data ?
+
+              (
+                <>
+                  <h1>{data.username}</h1>
+                  <button onClick={() => dispatch(exitLogin())}>Выйти</button>
+                </>
+              )
+              :
+              <Link to="/authorization">Авторизация</Link>}
           </div>
           <div className="flex-row">
             <Link to="/admin">Админ-панель</Link>

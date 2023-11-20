@@ -1,10 +1,6 @@
 const mongoose = require('mongoose')
 
 const ProductSchema = new mongoose.Schema({
-    _id: {
-        type: Number,
-        required: true
-    },
     name: {
         type: String,
         required: true
@@ -16,6 +12,11 @@ const ProductSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true
+    },
+    category : {
+        type: mongoose.Schema.Types.ObjectId,
+            ref: 'Category',
+            required: true
     },
     sizes: {
         type: [String],

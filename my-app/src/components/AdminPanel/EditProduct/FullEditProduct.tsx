@@ -63,7 +63,7 @@ const FullEditProduct = () => {
     const data = { ...inputValue };
     console.log(data);
     const response = await axios
-      .patch(`https://cjmnzp-3030.csb.app/product/update/${id}`, data)
+      .patch(`http://localhost:3030/product/update/${id}`, data)
       .then((item) => {
         console.log(item.data);
       })

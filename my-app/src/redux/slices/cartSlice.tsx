@@ -17,7 +17,9 @@ export interface CartItems {
     "price": number,
     "brand": string,
     "img": string,
-    "count": number
+    "count": number,
+    "size" : string,
+    "color" : string
 }
 
 

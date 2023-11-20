@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export interface ICreateItemsProps {
   name: string;
   description: string;
+  category: string,
   price: number;
   sizes: string[];
   colors: string[];
@@ -16,6 +17,7 @@ const CreateProduct = () => {
   const [inputValue, setInputValue] = useState<ICreateItemsProps>({
     name: "Штаны",
     description: "Топ",
+    category: '',
     price: 100,
     sizes: ["XLL", "L"],
     colors: ["Красный", "Зеленый"],
@@ -26,6 +28,8 @@ const CreateProduct = () => {
 
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
+  const [categories, setCategories] = useState<{ _id: string, category: string }[]>([])
+
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -58,16 +62,28 @@ const CreateProduct = () => {
   };
 
   const sendData = async () => {
-    const data = { ...inputValue, _id: Date.now() };
+    const data = { ...inputValue };
+    console.log(data)
     const response = await axios
-      .post("https://cjmnzp-3030.csb.app/product/create", data)
+      .post("http://localhost:3030/product/create", data)
       .then((item) => {
-        console.log(item.data);
       })
       .catch((e) => {
         console.log(e);
       });
   };
+
+
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      const response = await axios.get("http://localhost:3030/product/api/info").then((data) => {
+        console.log(data.data)
+        setCategories(data.data)
+      })
+    }
+    fetchInfo()
+  }, [])
 
   return (
     <div style={{ display: "inline-flex", flexDirection: "column" }}>
@@ -86,6 +102,16 @@ const CreateProduct = () => {
         onChange={handleChange}
         name="description"
       />
+      <label htmlFor="category">Категория</label>
+      <select
+        value={inputValue.category}
+        onChange={(e) => setInputValue((prevForm) => ({ ...prevForm, category: e.target.value }))}
+      >
+        <option value="">Выберите категорию</option>
+        {categories.length > 0 && categories.map((category) => (
+          <option key={category._id} value={category._id}>{category.category}</option>
+        ))}
+      </select>
       <label htmlFor="price">Цена</label>
       <input
         type="text"
