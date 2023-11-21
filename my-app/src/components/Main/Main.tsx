@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Item, { IItemsProps } from '../Item/Item';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import debounce from 'lodash.debounce';
 
 const Main = () => {
 
@@ -10,17 +10,22 @@ const Main = () => {
     const [data, setData] = useState<IItemsProps[]>([])
     const [categories, setCategories] = useState<{ _id: string, category: string }[]>([]);
     const [chooseCategory, setChooseCategory] = useState<number>(0)
+    const [search,setSearch] = useState<string>('')
 
+    
+    const fetchData = async () => {
+        const response = await axios.get(`http://localhost:3030/product/search?${search ? `search=${search}` : ''}&cat=${categories[chooseCategory] ? categories[chooseCategory]._id : 'null'}`);
+        setData(response.data);
+      };
 
+    const debouncedFetchData = debounce(fetchData, 500);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await axios.post("http://localhost:3030/product", {"category" : categories.length > 0 ? categories[chooseCategory] : null}).then((item) => {
-                setData(item.data)
-            })
-        }
-        fetchData()
-    }, [chooseCategory])
+        debouncedFetchData();
+        return () => {
+          debouncedFetchData.cancel();
+        };
+      }, [search,chooseCategory]);
 
 
 
@@ -41,6 +46,8 @@ const Main = () => {
     }, [])
 
 
+
+    
 
 
 
@@ -63,6 +70,9 @@ const Main = () => {
                             <option key={category._id} value={category._id}>{category.category}</option>
                         ))}
                     </select>
+                </div>
+                <div>
+                    <input type="text" onChange={(e) => setSearch(e.target.value)} value={search}/>
                 </div>
                 <div className='products__container'>
                     {data.length > 0 ? data.map((item) => (

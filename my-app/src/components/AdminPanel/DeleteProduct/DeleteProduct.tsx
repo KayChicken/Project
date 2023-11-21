@@ -10,7 +10,7 @@ const DeleteProduct = () => {
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get<IItemsProps[]>("http://localhost:3030/product")
+        .get<IItemsProps[]>("http://localhost:3030/product/get")
         .then((data) => {
           setItems(data.data);
         })
@@ -46,8 +46,9 @@ const DeleteProduct = () => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(5,calc(100%/5))",
-          columnGap: "15px",
+          gridTemplateColumns: "repeat(5,calc(100% / 5))",
+          rowGap:"40px",
+          
         }}
       >
         {items
@@ -60,7 +61,7 @@ const DeleteProduct = () => {
                 <img
                   src={`${item.img}`}
                   alt="item.png"
-                  style={{ width: "100px" }}
+                  style={{ width: "150px" }}
                 />
               </div>
             ))

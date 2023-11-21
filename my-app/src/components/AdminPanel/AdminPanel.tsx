@@ -17,6 +17,7 @@ const AdminPanel = () => {
           <Link to="/delete">Удалить одежду</Link>
           <Link to="/edit">Редактировать одежду</Link>
           <Link to="/orders">Заказы</Link>
+          <Link to="/aggregate">Агрегационные функции</Link>
         </div>
       </div>
     </section>

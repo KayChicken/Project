@@ -2,7 +2,7 @@ const Router = require("express");
 const router = new Router();
 const Order = require("../../models/Order");
 const Category = require("../../models/Category");
-
+const Product = require("../../models/Item");
 
 
 
@@ -45,6 +45,10 @@ router.get("/category" , async (req,res) => {
     await category.save()
     res.status(200).json("Succesful")
 }) 
+
+
+
+
 
 
 module.exports = router;

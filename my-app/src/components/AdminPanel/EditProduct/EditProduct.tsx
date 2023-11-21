@@ -31,7 +31,7 @@ const EditProduct = () => {
   useEffect(() => {
     const fetchData = async () => {
       await axios
-        .get<IEditItemsProps[]>("http://localhost:3030/product")
+        .get<IEditItemsProps[]>("http://localhost:3030/product/get")
         .then((response) => {
           setProducts(response.data);
         });
@@ -45,7 +45,8 @@ const EditProduct = () => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(4,calc(100% / 6))",
+          gridTemplateColumns: "repeat(5,calc(100% / 5))",
+          rowGap:"40px"
         }}
       >
         {products
@@ -55,7 +56,7 @@ const EditProduct = () => {
                 <img
                   src={`${item.img}`}
                   alt="item.png"
-                  style={{ width: "100px" }}
+                  style={{ width: "150px" }}
                 />
               </Link>
             ))

@@ -16,6 +16,8 @@ import Authorization from "./components/Authorization/Authorization";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import Orders from "./components/AdminPanel/Orders/Orders";
+import Aggregate from "./components/Agregate/Aggregate";
+import AggregateCategory from "./components/Agregate/AggregateCategory";
 
 function App() {
 
@@ -43,6 +45,8 @@ function App() {
           <Route path="/orders" element={<Orders/>}/>
           <Route path="/edit/:id" element={<FullEditProduct />} />
           <Route path="/authorization" element={<Authorization />} />
+          <Route path="/aggregate" element={<Aggregate/>}/>
+          <Route path="/aggregate/category" element={<AggregateCategory/>}/>
         </Routes>
       </main>
       {/* <Footer /> */}

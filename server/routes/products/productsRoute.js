@@ -79,11 +79,56 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+
+router.get("/get", async (req, res) => {
   try {
-    const category = req.body.category ? {category : req.body.category
-    } : {};
-    const products = await Product.find(category).populate('category').exec();
+   
+    const products = await Product.find();
+    res.status(200).json(products);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: "error" });
+  }
+});
+
+
+
+router.get('/api/aggregate', async (req, res) => {
+  try {
+    const {cat} = req.query
+    const products = await Product.aggregate([
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'category',
+          foreignField: '_id',
+          as: 'categoryData'
+        }
+      },
+      { $unwind: '$categoryData' },
+      { $match: { 'categoryData.category': cat } }, 
+      { $group: { _id: null, total: { $sum: 1 } } }
+    ]);
+    console.log(products)
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'error' });
+  }
+});
+
+
+
+
+router.get("/search", async (req, res) => {
+  try {
+    const { cat, search } = req.query;
+    const searchRegex = new RegExp(search, 'i');
+    const filter = { name: { $regex: searchRegex } }
+    if (cat !== 'null') {
+      filter.category = cat;
+    }
+    const products = await Product.find(filter).populate('category').exec();
     res.status(200).json(products);
   } catch (e) {
     console.log(e);
