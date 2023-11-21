@@ -18,6 +18,7 @@ import { RootState } from "./redux/store";
 import Orders from "./components/AdminPanel/Orders/Orders";
 import Aggregate from "./components/Agregate/Aggregate";
 import AggregateCategory from "./components/Agregate/AggregateCategory";
+import AggregatePrice from "./components/Agregate/AggregatePrice";
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
           <Route path="/authorization" element={<Authorization />} />
           <Route path="/aggregate" element={<Aggregate/>}/>
           <Route path="/aggregate/category" element={<AggregateCategory/>}/>
+          <Route path="/aggregate/price" element={<AggregatePrice/>}/>
         </Routes>
       </main>
       {/* <Footer /> */}
